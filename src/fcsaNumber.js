@@ -100,7 +100,7 @@
         var commas, decimals, wholeNumbers;
         decimals = val.indexOf('.') == -1 ? '' : val.replace(/^-?\d+(?=\.)/, '');
         wholeNumbers = val.replace(/(\.\d+)$/, '');
-        commas = wholeNumbers.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        commas = wholeNumbers.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1\.');
         return "" + commas + decimals;
       };
       return {
@@ -164,7 +164,7 @@
             if (options.append != null) {
               val = val.replace(options.append, '');
             }
-            elem.val(val.replace(/,/g, ''));
+            elem.val(val.replace(/\./g, ''));
             return elem[0].select();
           });
           if (options.preventInvalidInput === true) {
