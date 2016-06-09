@@ -23,7 +23,8 @@
         return options;
       };
       isNumber = function(val) {
-        return !isNaN(parseFloat(val)) && isFinite(val);
+        var numberUnlocalizedDecimals = val.replace(/,/g, '.');
+        return !isNaN(parseFloat(numberUnlocalizedDecimals)) && isFinite(numberUnlocalizedDecimals);
       };
       isNotDigit = function(which) {
         return which < 44 || which > 57 || which === 47;
@@ -36,12 +37,12 @@
         return which === 44;
       };
       hasMultipleDecimals = function(val) {
-        return (val != null) && val.toString().split('.').length > 2;
+        return (val != null) && val.toString().split(',').length > 2;
       };
       makeMaxDecimals = function(maxDecimals) {
         var regexString, validRegex;
         if (maxDecimals > 0) {
-          regexString = "^-?\\d*\\.?\\d{0," + maxDecimals + "}$";
+          regexString = "^-?\\d*,?\\d{0," + maxDecimals + "}$";
         } else {
           regexString = "^-?\\d*$";
         }
@@ -90,7 +91,7 @@
           if (hasMultipleDecimals(val)) {
             return false;
           }
-          number = Number(val);
+          number = parseFloat(val.replace(/,/g, '.'));
           for (i = _i = 0, _ref = validations.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
             if (!validations[i](val, number)) {
               return false;
@@ -101,8 +102,8 @@
       };
       addCommasToInteger = function(val) {
         var commas, decimals, wholeNumbers;
-        decimals = val.indexOf('.') == -1 ? '' : val.replace(/^-?\d+(?=\.)/, '');
-        wholeNumbers = val.replace(/(\.\d+)$/, '');
+        decimals = val.indexOf(',') == -1 ? '' : val.replace(/^-?\d+(?=,)/, '');
+        wholeNumbers = val.replace(/(,\d+)$/, '');
         commas = wholeNumbers.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1\.');
         return "" + commas + decimals;
       };
@@ -118,7 +119,7 @@
           isValid = makeIsValid(options);
           ngModelCtrl.$parsers.unshift(function(viewVal) {
             var noCommasVal;
-            noCommasVal = viewVal.replace(/,/g, '');
+            noCommasVal = viewVal.replace(/\./g, '');
             if (isValid(noCommasVal) || !noCommasVal) {
               ngModelCtrl.$setValidity('fcsaNumber', true);
               return noCommasVal;
