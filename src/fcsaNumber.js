@@ -7,7 +7,7 @@
 
   fcsaNumberModule.directive('fcsaNumber', [
     'fcsaNumberConfig', function(fcsaNumberConfig) {
-      var addCommasToInteger, controlKeys, defaultOptions, getOptions, hasMultipleDecimals, isNotControlKey, isNotDigit, isNumber, makeIsValid, makeMaxDecimals, makeMaxDigits, makeMaxNumber, makeMinNumber;
+      var addCommasToInteger, controlKeys, defaultOptions, getOptions, hasMultipleDecimals, isNotControlKey, isDecimalKey, isNotDigit, isNumber, makeIsValid, makeMaxDecimals, makeMaxDigits, makeMaxNumber, makeMinNumber;
       defaultOptions = fcsaNumberConfig.defaultOptions;
       getOptions = function(scope) {
         var option, options, value, _ref;
@@ -31,6 +31,9 @@
       controlKeys = [0, 8, 13];
       isNotControlKey = function(which) {
         return controlKeys.indexOf(which) === -1;
+      };
+      isDecimalKey = function(which) {
+        return which === 44;
       };
       hasMultipleDecimals = function(val) {
         return (val != null) && val.toString().split('.').length > 2;
@@ -170,6 +173,9 @@
           if (options.preventInvalidInput === true) {
             return elem.on('keypress', function(e) {
               if (isNotDigit(e.which) && isNotControlKey(e.which)) {
+                return e.preventDefault();
+              }
+              if (options.maxDecimals === 0 && isDecimalKey(e.which)) {
                 return e.preventDefault();
               }
             });
