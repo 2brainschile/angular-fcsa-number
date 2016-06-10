@@ -10,7 +10,7 @@ If an invalid number is entered, the textbox will be invalid with the `fcsaNumbe
 
 #### With Bower
 
-    bower install angular-fcsa-number
+    bower install --save 2brainschile/angular-fcsa-number#master
 
 Then reference `angular-fcsa-number/src/fcsaNumber.js` in your project.
 
