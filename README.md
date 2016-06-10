@@ -1,8 +1,8 @@
 # FCSA Number
 
-An Angular directive that validates numbers and adds commas for the thousands separator. 
+An Angular directive that validates numbers and adds dots for the thousands separator. 
 
-So when the user enters `1000` into a textbox and tabs out, the value will be formatted to include the thousands separator and display: `1,000`
+So when the user enters `1000` into a textbox and tabs out, the value will be formatted to include the thousands separator and display: `1.000`
 
 If an invalid number is entered, the textbox will be invalid with the `fcsaNumber` error.
 
@@ -32,7 +32,7 @@ When an invalid number is entered by the user, the form and control will become 
 
 ## Options
 
-Without any options passed to it, fcsa-number will validate that the input is a valid number and will also add commas for the thousand separators.
+Without any options passed to it, fcsa-number will validate that the input is a valid number and will also add dots for the thousand separators.
 
 
 #### max
@@ -111,6 +111,8 @@ app.config(['fcsaNumberConfigProvider', function(fcsaNumberConfigProvider) {
 The default options can be overridden locally by passing in an options object: `fcsa-number="{ max: 10 }"`
 
 ## Developing
+
+**Warning: changes in this fork were made in the JS (not coffee) file.**
 
 Grunt is used to compile the CoffeeScript files and run the tests. To get started run the following commands on the command line:
 
